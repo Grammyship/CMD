@@ -96,8 +96,8 @@ def main():
     search_documents = handler.search_document_by_ID(search_documents_ID)
     print(f"ID:{search_documents.get('_id')} {search_documents.get('judgement')}")
 
-    # 輸出相關文件
-    print("相關文件：")
+    # 輸出相似文件
+    print("相似文件:")
     relation_table = handler.analysis_related_issues(search_documents_ID)
     print(relation_table)
     
