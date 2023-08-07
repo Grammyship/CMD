@@ -14,10 +14,10 @@ except:
     exit()
 
 myclient = pymongo.MongoClient(connect_string)
-mydb = database_name
-mycol = collection_name
+mydb = myclient[database_name]
+mycol = mydb[collection_name]
 
-dataPATH = "./福建連江地方法院_民事"
+dataPATH = "./臺灣桃園地方法院_民事"
 
 if __name__ == "__main__":
     fileLIST = os.listdir(dataPATH)
