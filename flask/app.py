@@ -3,6 +3,8 @@ sys.path.append('../')
 from flask import Flask, render_template, request
 import json
 from search import CMD
+import base64
+
 
 searchHandler = CMD("../config.ini")
 if searchHandler is None:
@@ -16,6 +18,10 @@ app = Flask(__name__)
 @app.route('/')
 def main():
     return render_template('index.html')
+
+@app.route('/api/graph', methods=['GET'])
+def graph():
+    return render_template('mermaid.html', content=base64.b64decode(request.args.get('description')).decode('UTF-8'))
 
 @app.route('/api/search', methods=['GET'])
 def search():
@@ -31,13 +37,16 @@ def detail():
         "id": str(data["_id"]),
         "content": data["judgement"],
         "court": data["court"],
+        "date": data["date"],
+        "sys": data["sys"],
+        "reason": data["reason"],
         "no": data["no"],
     }
     return result
 
 @app.route('/api/related', methods=['GET'])
 def related():
-    data = searchHandler.analysis_related_issues(request.args.get('id'))
+    data = searchHandler.analysis_related_issues(request.args.get('id'), 7)
     return data
 
 if __name__ == '__main__':
