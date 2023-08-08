@@ -37,7 +37,8 @@ class SearchHandler:
                     if doc.get("_id") not in relation_table:
                         relation_table[doc.get("_id")] = {
                             "related": doc.get("relatedIssues"),
-                            "title": f"{doc.get('date').split('T')[0]} {doc.get('court')} {doc.get('no')}",
+                            "title": f"{doc.get('court')} {doc.get('no')}",
+                            "time": doc.get("date"),
                             "accuracy": 0
                         }
         # calculate accuracy
@@ -60,6 +61,7 @@ class SearchHandler:
             row = {}
             row["id"] = str(key)
             row["title"] = value["title"]
+            row["time"] = value["time"]
             result.append(row)
 
         if(limit > len(result)):
