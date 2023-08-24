@@ -17,7 +17,7 @@ myclient = pymongo.MongoClient(connect_string)
 mydb = myclient[database_name]
 mycol = mydb[collection_name]
 
-dataPATH = "./臺灣桃園地方法院_民事"
+dataPATH = "./福建連江地方法院_民事"
 
 if __name__ == "__main__":
     fileLIST = os.listdir(dataPATH)
@@ -31,4 +31,11 @@ if __name__ == "__main__":
 """
 mydict = { "name": "John", "address": "Highway 37" }
 x = mycol.insert_one(mydict)
+
+db.createUser({
+    user: "root",
+    pwd: "4E27860D9377A4493C485AEEFE423FDC",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+})
+
 """
