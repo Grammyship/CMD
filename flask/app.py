@@ -4,15 +4,16 @@ from flask import Flask, render_template, request
 import json
 from search import CMD
 import base64
-
+from urllib.parse import unquote
 
 searchHandler = CMD("../config.ini")
 if searchHandler is None:
     print("CMD init failed")
     exit(0)
 
-app = Flask(__name__)
-
+app = Flask(__name__, static_folder='assets/')
+app.jinja_env.variable_start_string = '[['
+app.jinja_env.variable_end_string = ']]'
 
 
 @app.route('/')
@@ -21,7 +22,7 @@ def main():
 
 @app.route('/api/graph', methods=['GET'])
 def graph():
-    return render_template('mermaid.html', content=base64.b64decode(request.args.get('description')).decode('UTF-8'))
+    return render_template('mermaid.html', content=unquote(request.args.get('description')))
 
 @app.route('/api/search', methods=['GET'])
 def search():

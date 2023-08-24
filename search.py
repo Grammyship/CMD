@@ -14,7 +14,11 @@ class SearchHandler:
                 for doc in search_documents_list:
                     row = {}
                     row["id"] = str(doc.get("_id"))
-                    row["title"] = f"{doc.get('date').split('T')[0]} {doc.get('court')} {doc.get('no')}"
+                    row["court"] = doc.get("court")
+                    row["no"] = doc.get("no")
+                    row["sys"] = doc.get("sys")
+                    row["date"] = f"{doc.get('date').split('T')[0]}"
+                    row["reason"] =  doc.get("reason")
                     result.append(row)
                     if len(result) >= limit:
                         break
