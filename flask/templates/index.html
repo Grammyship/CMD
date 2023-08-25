@@ -22,19 +22,19 @@
         <div style="height: 10px;"></div>
         <div id="app" class="container" style="text-align: center;">
             <!-- Layout Begin -->
-            <div :style="`height:100px;position: absolute;width:60%;left:20%;top:${view=='search'?'20%':'10px'};text-align: center;`">
+            <div :style="`height:100px;position: absolute;width:60%;left:20%;top:${view=='search'?'30%':'20px'};text-align: center;`">
                 <div class="row">
                     <div class="col-12">
-                        <h1 style="font-size: 50px; color: white;"><b>查詢系統</b></h1>
+                        <h1 style="font-size: 50px; color: white;"><b>悉法通-判決書搜尋系統</b></h1>
                     </div>
                 </div>
                 <br>
                 <!-- Search Bar Begin -->
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-11">
                         <input type="text" class="form-control" v-model="keyword" style="border-radius: 50px;" placeholder="請輸入關鍵字" v-on:keyup.enter="search()">
                     </div>
-                    <div class="col-2 d-grid">
+                    <div class="col-1 d-grid">
                         <button type="button" class="btn btn-primary btn-sm" @click="search()" style="border-radius: 40px;padding-top:10px;height: 40px;">
                             <span class="material-icons">
                                 search
@@ -116,19 +116,19 @@
                             <h4 style="color: white;">摘要</h4>
                         </div>
                     </div>
-                    <div class="mb-3" style="width: 100%; height: auto;background-color: rgba(255, 255, 255, 0.8);">
-                        <textarea type="text" style="height: 300px;resize: none;" class="form-control" v-model="searchContent.content" disabled></textarea>
+                    <div class="mb-3" style="width: 100%; height: auto;background-color: rgba(255, 255, 255, 1);">
+                        <textarea type="text" style="height: 250px;resize: none;border-radius: 10px;" class="form-control" v-model="searchContent.content" disabled></textarea>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <h4 style="color: white;">關係圖</h4>
                         </div>
                     </div>
-                    <div class="mb-3" style="width: 100%; height: auto;background-color: rgba(255, 255, 255, 0.8);">
+                    <div class="mb-3" style="width: 100%; height: auto;background-color: rgba(255, 255, 255, 1);">
                         <div class="list-group" v-if="graph == ''">
                             <p>Loading ...</p>
                         </div>
-                        <iframe :src="'./api/graph?description='+graph" style="width: 100%; height: 300px;"></iframe>
+                        <iframe :src="'./api/graph?description='+graph" style="width: 100%; height: 360px;"></iframe>
                     </div>
                 </div>
                 <div class="col-12">
@@ -161,6 +161,13 @@
                 </div>
             </div>
             <!-- Detail End -->
+
+            <footer v-if="view=='search'">
+                <div style="height:40px;width: 100%;background-color: rgb(255, 255, 255,0.4);color:rgb(232, 232, 232);position: fixed;bottom: 0px;left:0px;text-align: right;">
+                    <span style="margin:30px;top:10px;position: relative;"><b>聯絡資訊 : ss96083@gmail.com</b></span>
+                </div>
+            </footer>
+            
             <!-- Layout End -->
         </div>
         <script>
@@ -221,7 +228,7 @@
                             this.relatedResult = data
                         })
                         this.view = 'showDetail'
-                    this.graph = 'graph%20LR%0AA%5B%E8%8E%8A%E7%BE%8E%E5%80%AB%5D%20--%E8%AB%8B%E6%B1%82%E9%9B%A2%E5%A9%9A--%3E%20B%5B%E9%99%B3%E6%84%9B%E8%8F%AF%5D'
+                    this.graph = 'sequenceDiagram%0A%20%20%20%20participant%20A%20as%20%E8%A2%AB%E5%91%8A%0A%20%20%20%20participant%20B%20as%20%E5%8E%9F%E5%91%8A%0A%20%20%20%20participant%20C%20as%20%E8%A8%B4%E8%A8%9F%E4%BB%A3%E7%90%86%E4%BA%BA%0A%20%20%20%20note%20left%20of%20A%3A%20%E6%B0%91%E5%9C%8B87%E5%B9%B4%0A%20%20%20%20A-%3E%3EB%3A%20%E5%80%9F%E6%AC%BE%20200%2C000%20%E5%85%83%0A%20%20%20%20B-%3E%3EC%3A%20%E5%A7%94%E8%A8%97%E8%A8%B4%E8%A8%9F%0A%20%20%20%20C-%3E%3EA%3A%20%E8%AB%8B%E6%B1%82%E5%84%9F%E9%82%84%E5%80%9F%E6%AC%BE%0A%20%20%20%20note%20left%20of%20A%3A%20%E6%B3%95%E9%99%A2%E5%88%A4%E6%B1%BA%0A%20%20%20%20A-%3E%3EB%3A%20%E6%87%89%E7%B5%A6%E4%BB%98%2081%2C057%20%E5%85%83%0A%20%20%20%20note%20right%20of%20A%3A%20%E5%B9%B4%E6%81%AF9.75%25%0A%20%20%20%20A-%3E%3EB%3A%20%E8%A8%B4%E8%A8%9F%E8%B2%BB%E7%94%A8%201%2C000%20%E5%85%83'
                 },
             },}).mount('#app')
         </script>
