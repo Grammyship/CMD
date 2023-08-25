@@ -18,7 +18,7 @@
             }
         </style>
     </head>
-    <body style="background-image: url('/assets/background.png');background-repeat: no-repeat;background-size: cover;">
+    <body style="background-image: url('/assets/background.png');background-repeat: no-repeat;background-size: cover;background-color: rgb(0,0,0,0.6);background-blend-mode: multiply;">
         <div style="height: 10px;"></div>
         <div id="app" class="container" style="text-align: center;">
             <!-- Layout Begin -->
@@ -31,11 +31,11 @@
                 <br>
                 <!-- Search Bar Begin -->
                 <div class="row">
-                    <div class="col-11">
+                    <div class="col-10">
                         <input type="text" class="form-control" v-model="keyword" style="border-radius: 50px;" placeholder="請輸入關鍵字" v-on:keyup.enter="search()">
                     </div>
-                    <div class="col-1 d-grid">
-                        <button type="button" class="btn btn-primary btn-sm" @click="search()" style="border-radius: 40px;">
+                    <div class="col-2 d-grid">
+                        <button type="button" class="btn btn-primary btn-sm" @click="search()" style="border-radius: 40px;padding-top:10px;height: 40px;">
                             <span class="material-icons">
                                 search
                             </span>
@@ -47,7 +47,10 @@
             <div style="height: 150px;"></div>
             <!-- Search Result Begin -->
             <div class="mb-3" v-if="view=='showList'">
-                <table class="table">
+                <div class="list-group" v-if="searchResult.length == 0">
+                    <h1 style="font-size: 18px; color: white;margin-top:20px"><b>查無結果</b></h1>
+                </div>
+                <table class="table" v-else>
                     <thead>
                       <tr style="color: white;font-size: 28px;">
                         <th scope="col">文號</th>
@@ -103,11 +106,19 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <textarea type="text" style="height: 600px;" class="form-control" v-model="searchContent.content" disabled></textarea>
+                        <textarea type="text" style="height: 400px;resize: none;" class="form-control" v-model="searchContent.content" disabled></textarea>
                     </div>
                     
                 </div>
                 <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 style="color: white;">摘要</h4>
+                        </div>
+                    </div>
+                    <div class="mb-3" style="width: 100%; height: auto;background-color: rgba(255, 255, 255, 0.8);">
+                        <textarea type="text" style="height: 300px;resize: none;" class="form-control" v-model="searchContent.content" disabled></textarea>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <h4 style="color: white;">關係圖</h4>
@@ -117,19 +128,34 @@
                         <div class="list-group" v-if="graph == ''">
                             <p>Loading ...</p>
                         </div>
-                        <iframe :src="'./api/graph?description='+graph" style="width: 100%; height: 400px;"></iframe>
+                        <iframe :src="'./api/graph?description='+graph" style="width: 100%; height: 300px;"></iframe>
                     </div>
+                </div>
+                <div class="col-12">
                     <div class="row">
                         <div class="col-12">
-                            <h4 style="color: white;">相似判決</h4>
+                            <h1 style="font-size: 40px; color: white;margin-top:20px"><b>相似判決</b></h1>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <div class="list-group" v-if="relatedResult.length == 0">
-                            <p>Loading ...</p>
-                        </div>
-                        <div class="list-group" v-for="item in relatedResult">
-                            <input type="button" :value="item.title" class="list-group-item list-group-item-action" @click="detail(item.id)"/>
+                        <div class="mb-3">
+                            <div class="list-group" v-if="relatedResult.length == 0">
+                                <h1 style="font-size: 18px; color: white;margin-top:20px"><b>查無結果</b></h1>
+                            </div>
+                            <table class="table" v-else>
+                                <thead>
+                                  <tr style="color: white;font-size: 20px;">
+                                    <th scope="col">主旨</th>
+                                    <th scope="col">日期</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="table-item" v-for="item in relatedResult" @click="detail(item.id);">
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.time}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                         </div>
                     </div>
                 </div>
